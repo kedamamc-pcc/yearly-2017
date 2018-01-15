@@ -5,10 +5,40 @@ html, body {
 }
 
 header {
+  width: 100%;
   height: 60px;
   text-align: center;
   perspective: 500px;
   background: linear-gradient(to right, #000, #555, #000) #444;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+header > .wrapper {
+  width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+header a {
+  text-decoration: none;
+  color: #999;
+  line-height: 40px;
+  position: absolute;
+  top: 10px;
+}
+
+header a:hover {
+  color: #fff;
+}
+
+#link-kpcc {
+  left: 0;
+}
+
+#link-kedama {
+  right: 0;
 }
 
 #logo {
@@ -16,7 +46,7 @@ header {
   font-family: PingFang SC;
   font-weight: 300;
   transition: transform .5s cubic-bezier(0, 0, 0.2, 1);
-  transform: translateY(80px);
+  transform: translateY(30px);
   transform-origin: top center;
 }
 
@@ -41,6 +71,30 @@ header {
   line-height: 1;
   padding: 8px;
   background: #fff;
+}
+
+main {
+  padding-top: 60px;
+  text-align: center;
+}
+
+section {
+  margin: 40px 0;
+}
+
+section:first-child {
+  margin-top: 200px;
+  font-size: 24px;
+}
+
+section h1 {
+  display: inline-block;
+  font-size: 36px;
+  padding: 8px;
+  border: 2px solid #000;
+  font-weight: 100;
+  line-height: 1;
+  margin: 0;
 }
 
 footer {
