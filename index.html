@@ -21,7 +21,19 @@
     <p>毛线注册玩家总计 <em>3539</em> 名</p>
   </section>
   <section>
-    <h1>2017／感谢有你们</h1>
+    <h1>欢迎萌新们</h1>
+    <p>共有 <em>2468</em> 名玩家于这一年入服</p>
+    <p>占全部玩家的 <em>69.737%</em></p>
+    <p><em>Yi_Dan</em>，你是新年第一个入服的</p>
+    <p>而你是最后一个，<em>Salvation_sword</em></p>
+  </section>
+  <section>
+    <h1>我们棒棒哒</h1>
+    <p>全服累计……</p>
+    <p>在线时间 <em>3662</em> 天 <em>17</em> 小时 <em>10</em> 分 <em>22</em> 秒</p>
+    <p>开采方块 <em>??????</em> 个（萌新们贡献了 <em>??%</em>）</p>
+    <p>使用食物 <em>?????</em> 个（萌新们贡献了 <em>??%</em>）</p>
+    <p>……</p>
   </section>
 </main>
 
@@ -30,7 +42,12 @@
 </footer>
 
 <script>
-  document.getElementById('logo').addEventListener('click', function () {
-    this.classList.toggle('tilt')
+  var logo = document.getElementById('logo')
+  document.body.addEventListener('scroll', function () {
+    if (this.scrollTop === 0) {
+      logo.classList.remove('tilt')
+    } else {
+      logo.classList.add('tilt')
+    }
   })
 </script>

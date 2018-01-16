@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   height: 100%;
   background: radial-gradient(circle at top center, #fff, #ddd) #eee;
+  overflow: auto;
 }
 
 header {
@@ -80,11 +81,11 @@ main {
 
 section {
   margin: 40px 0;
+  font-size: 24px;
 }
 
 section:first-child {
   margin-top: 200px;
-  font-size: 24px;
 }
 
 section h1 {
@@ -94,7 +95,34 @@ section h1 {
   border: 2px solid #000;
   font-weight: 100;
   line-height: 1;
-  margin: 0;
+  margin: 200px 0 100px;
+  background: #fff;
+}
+
+section h1::before {
+  content: '2017';
+  display: block;
+  float: left;
+  color: #fff;
+  background: #000;
+  margin: -8px 0 -8px -8px;
+  padding: 8px 6px 8px 8px;
+}
+
+section h1::after {
+  content: '';
+  display: block;
+  float: left;
+  border-width: 26px 4px;
+  border-style: solid;
+  border-color: #000 #fff #fff #000;
+  box-sizing: border-box;
+  margin: -8px 6px -8px 0;
+}
+
+section em {
+  font-style: normal;
+  font-size: larger;
 }
 
 footer {
