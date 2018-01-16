@@ -1,4 +1,5 @@
 <!doctype html>
+<meta charset="utf-8">
 <link rel="stylesheet" href="./style.css">
 
 <header>
@@ -35,6 +36,19 @@
     <p>使用食物 <em>?????</em> 个（萌新们贡献了 <em>??%</em>）</p>
     <p>……</p>
   </section>
+  <section>
+    <h1>我们建设过</h1>
+  </section>
+  <section>
+    <h1>我们战斗过</h1>
+    <p>全服玩家累积杀死怪物 <em>?????</em> 只（萌新们贡献了 <em>????</em> 只）</p>
+    <p>杀死最多的是 <em>???</em>，共 <em>????</em> 只</p>
+    <p>全服玩家累积被怪物杀死 <em>????</em> 次（萌新们贡献了 <em>????</em> 次）</p>
+    <p>杀死玩家最多的是 <em>???</em></p>
+  </section>
+  <section>
+    <h1>我们旅行过</h1>
+  </section>
 </main>
 
 <footer>
@@ -43,8 +57,8 @@
 
 <script>
   var logo = document.getElementById('logo')
-  document.body.addEventListener('scroll', function () {
-    if (this.scrollTop === 0) {
+  document.addEventListener('scroll', function () {
+    if (this.documentElement.scrollTop <= 10) {
       logo.classList.remove('tilt')
     } else {
       logo.classList.add('tilt')
