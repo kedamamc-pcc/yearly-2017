@@ -1,6 +1,8 @@
 html, body {
   margin: 0;
   height: 100%;
+  font-family: -apple-system, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  font-weight: 100;
   background: radial-gradient(circle at top center, #fff, #ddd) no-repeat fixed #eee;
 }
 
@@ -16,7 +18,7 @@ header {
 }
 
 header > .wrapper {
-  width: 1000px;
+  width: 600px;
   margin: 0 auto;
   position: relative;
 }
@@ -43,7 +45,6 @@ header a:hover {
 
 #logo {
   display: inline-block;
-  font-family: PingFang SC;
   font-weight: 300;
   transition: transform .5s cubic-bezier(0, 0, 0.2, 1);
   transform: translateY(30px);
@@ -101,7 +102,7 @@ section h1 {
   border: 2px solid #000;
   font-weight: 100;
   line-height: 1;
-  margin: 200px 0 100px;
+  margin: 200px 0 40px;
   background: #fff;
 }
 
@@ -126,9 +127,37 @@ section h1::after {
   margin: -8px 6px -8px 0;
 }
 
+section p {
+  margin: 40px 20px;
+}
+
 section em {
+  display: block;
   font-style: normal;
-  font-size: 32px;
+  font-size: 28px;
+  color: #444;
+}
+
+section strong {
+  display: block;
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+section strong span {
+  font-size: 20px;
+  font-weight: 100;
+  vertical-align: middle;
+  line-height: 36px;
+  margin: 0 .2em;
+  text-shadow: none;
+}
+
+section small {
+  display: block;
+  font-size: 16px;
+  color: #999;
 }
 
 footer {
