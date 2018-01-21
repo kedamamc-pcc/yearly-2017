@@ -9,11 +9,6 @@ let firstLogin = Date.now()
 let newbieCount = 0
 let firstNewbie = {data: {time_start: Date.now()}}
 let lastNewbie = {data: {time_start: 0}}
-let totalLiveTime = 0
-let totalMineBlock = newbieMineBlock = 0
-let useRailCount = useRailNewbie = 0
-let aviateCount = aviateNewbie = 0
-let walkCount = walkNewbie = 0
 
 const result = {}
 const logFuncs = []
@@ -21,49 +16,120 @@ const logFuncs = []
 for (const p of data.players) {
   const pstat = p.stats
   const pdata = p.data
-  // if (pdata.time_start < firstLogin) firstLogin = pdata.time_start
   const isNewbie = pdata.time_start >= new Date('2017-01-01 00:00:00 +0800') && pdata.time_start < new Date('2018-01-01 00:00:00 +0800')
+
+  // if (pdata.time_start < firstLogin) firstLogin = pdata.time_start
   // if (isNewbie) newbieCount++
   // if (pdata.time_start < firstNewbie.data.time_start) firstNewbie = p
   // if (pdata.time_start > lastNewbie.data.time_start) lastNewbie = p
-  // totalLiveTime += pdata.time_lived
-  // const mineblock = sumStats(pstat, ITEMS.mineBlocks, 'stat.mineBlock.minecraft.')
-  // totalMineBlock += mineblock
-  // if (isNewbie) newbieMineBlock += mineblock
-  // const useRail = sumStats(pstat, ITEMS.rails, 'stat.useItem.minecraft.') - sumStats(pstat, ITEMS.rails, 'stat.mineBlock.minecraft.')
-  // useRailCount += useRail
-  // if (isNewbie) useRailNewbie += useRail
-  // const aviate = sumStats(pstat, ['aviateOneCm'], 'stat.')
-  // aviateCount += aviate
-  // if (isNewbie) aviateNewbie += aviate
-  //
-  // const walk = sumStats(pstat, ['walkOneCm', 'sprintOneCm'], 'stat.')
-  // walkCount += walk
-  // if (isNewbie) walkNewbie += walk
-  //
-  // if (!result.minecart) result.minecart = [0, 0]
-  // const minecart = sumStats(pstat, ['minecartOneCm'], 'stat.')
-  // result.minecart[0] += minecart
-  // if (isNewbie) result.minecart[1] += minecart
-  //
-  // if (!result.boat) result.boat = [0, 0]
-  // const boat = sumStats(pstat, ['boatOneCm'], 'stat.')
-  // result.boat[0] += boat
-  // if (isNewbie) result.boat[1] += boat
-  //
-  // if (!result.killRabbit) {
-  //   result.killRabbit = [0, 0]
-  //   logFuncs.push(_ => log('累计杀兔子', ...result.killRabbit))
-  // }
-  // const killRabbit = sumStats(pstat, ['Rabbit'], 'stat.killEntity.')
-  // result.killRabbit[0] += killRabbit
-  // if (pdata.time_start >= 1487302941632) result.killRabbit[1] += killRabbit
+
+  {
+    const title = '累计在线时间'
+    if (!result.lived) {
+      result.lived = [0, 0]
+      logFuncs.push(_ => console.log(`${title}: ${secs2time(result.lived[0])}`))
+      result.deaths = 0
+      logFuncs.push(_ => console.log(`累计死亡次数: ${result.deaths}`))
+      logFuncs.push(_ => console.log(`平均存活时间: ${secs2time(result.lived[0] / result.deaths)}`))
+    }
+    result.lived[0] += pdata.time_lived
+    result.deaths += pstat['stat.deaths'] || 0
+  }
 
   // {
+  //   const title = '累计开采方块'
+  //   if (!result.mineBlock) {
+  //     result.mineBlock = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.mineBlock))
+  //   }
+  //   const sum = sumStats(pstat, ITEMS.mineBlocks, 'stat.mineBlock.minecraft.')
+  //   result.mineBlock[0] += sum
+  //   if (isNewbie) result.mineBlock[1] += sum
+  // }
+
+  // {
+  //   const title = '累计使用铁轨'
+  //   if (!result.useRail) {
+  //     result.useRail = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.useRail))
+  //   }
+  //   const sum = sumStats(pstat, ITEMS.rails, 'stat.useItem.minecraft.') - sumStats(pstat, ITEMS.rails, 'stat.mineBlock.minecraft.')
+  //   result.useRail[0] += sum
+  //   if (isNewbie) result.useRail[1] += sum
+  // }
+
+  // {
+  //   const title = '累计飞行'
+  //   if (!result.aviate) {
+  //     result.aviate = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.aviate.map(n => n / 100)))
+  //   }
+  //   const aviate = sumStats(pstat, ['aviateOneCm'], 'stat.')
+  //   result.aviate[0] += aviate
+  //   if (isNewbie) result.aviate[1] += aviate
+  // }
+
+  // {
+  //   const title = '累计行走'
+  //   if (!result.walk) {
+  //     result.walk = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.walk.map(n => n / 100)))
+  //   }
+  //   const walk = sumStats(pstat, ['walkOneCm', 'sprintOneCm'], 'stat.')
+  //   result.walk[0] += walk
+  //   if (isNewbie) result.walk[1] += walk
+  // }
+
+  // {
+  //   const title = '累计行驶矿车'
+  //   if (!result.minecart) {
+  //     result.minecart = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.minecart.map(n => n / 100)))
+  //   }
+  //   const minecart = sumStats(pstat, ['minecartOneCm'], 'stat.')
+  //   result.minecart[0] += minecart
+  //   if (isNewbie) result.minecart[1] += minecart
+  // }
+
+  // {
+  //   const title = '累计划船'
+  //   if (!result.boat) {
+  //     result.boat = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.boat.map(n => n / 100)))
+  //   }
+  //   const boat = sumStats(pstat, ['boatOneCm'], 'stat.')
+  //   result.boat[0] += boat
+  //   if (isNewbie) result.boat[1] += boat
+  // }
+
+  // {
+  //   const title = '累计骑马'
+  //   if (!result.horse) {
+  //     result.horse = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.horse.map(n => n / 100)))
+  //   }
+  //   const sum = sumStats(pstat, ['horseOneCm'], 'stat.')
+  //   result.horse[0] += sum
+  //   if (isNewbie) result.horse[1] += sum
+  // }
+
+  // {
+  //   const title = '累计杀兔子'
+  //   if (!result.killRabbit) {
+  //     result.killRabbit = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.killRabbit))
+  //   }
+  //   const killRabbit = sumStats(pstat, ['Rabbit'], 'stat.killEntity.')
+  //   result.killRabbit[0] += killRabbit
+  //   if (pdata.time_start >= 1487302941632) result.killRabbit[1] += killRabbit
+  // }
+
+  // {
+  //   const title = '累计杀怪物'
   //   if (!result.killMonster) {
   //     result.killMonster = [0, 0]
   //     result.killMonsterStats = Object.assign({}, ...ITEMS.monsters.map(k => ({[k]: 0})))
-  //     logFuncs.push(_ => log('累计杀怪物', ...result.killMonster))
+  //     logFuncs.push(_ => log(title, ...result.killMonster))
   //     logFuncs.push(_ => {
   //       const ens = Object.entries(result.killMonsterStats).sort((a, b) => a[1] - b[1])
   //       console.log(`- Max: ${ens[ens.length - 1].join(' ')}`)
@@ -77,12 +143,13 @@ for (const p of data.players) {
   //     result.killMonsterStats[en[0].slice('stat.killEntity.'.length)] += en[1]
   //   }
   // }
-  //
+
   // {
+  //   const tile = '累计被怪物杀死'
   //   if (!result.killedBy) {
   //     result.killedBy = [0, 0]
   //     result.killedByStats = Object.assign({}, ...ITEMS.monsters.map(k => ({[k]: 0})))
-  //     logFuncs.push(_ => log('累计被怪物杀死', ...result.killedBy))
+  //     logFuncs.push(_ => log(title, ...result.killedBy))
   //     logFuncs.push(_ => {
   //       const ens = Object.entries(result.killedByStats).sort((a, b) => a[1] - b[1])
   //       console.log(`- Max: ${ens[ens.length - 1].join(' ')}`)
@@ -97,15 +164,57 @@ for (const p of data.players) {
   //   }
   // }
 
-  {
-    if (!result.useFood) {
-      result.useFood = [0, 0]
-      logFuncs.push(_ => log('累计使用食物', ...result.useFood))
-    }
-    const sum = sumStats(pstat, ITEMS.foods, 'stat.useItem.minecraft.')
-    result.useFood[0] += sum
-    if (isNewbie) result.useFood[1] += sum
-  }
+  // {
+  //   const title = '累计饮食'
+  //   if (!result.useFood) {
+  //     result.useFood = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.useFood))
+  //     result.useFoodStats = Object.assign({}, ...ITEMS.foods.map(k => ({[k]: 0})))
+  //     logFuncs.push(_ => {
+  //       const ens = Object.entries(result.useFoodStats).sort((a, b) => b[1] - a[1])
+  //       console.log(`- Max: ${ens[0].join(' ')}`)
+  //       // console.log(ens.map(en => `    ${en.join(' ')}`).join('\n'))
+  //     })
+  //   }
+  //   const sum = sumStats(pstat, ITEMS.foods, 'stat.useItem.minecraft.', result.useFoodStats)
+  //   result.useFood[0] += sum
+  //   if (isNewbie) result.useFood[1] += sum
+  // }
+
+  // {
+  //   const title = '累计合成'
+  //   if (!result.craft) {
+  //     result.craft = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.craft))
+  //     result.craftStats = {}
+  //     logFuncs.push(_ => {
+  //       const ens = Object.entries(result.craftStats).sort((a, b) => b[1] - a[1])
+  //       console.log(`- Max: ${ens[0].join(' ')}`)
+  //     })
+  //   }
+  //   const sum = Object.entries(pstat).filter(en => en[0].includes('stat.craftItem.')).reduce((acc, en) => {
+  //     result.craftStats[en[0]] = (result.craftStats[en[0]] || 0) + en[1]
+  //     return acc + en[1]
+  //   }, 0)
+  //   result.craft[0] += sum
+  //   if (isNewbie) result.craft[1] += sum
+  // }
+
+  // {
+  //   const title = '累计使用方块'
+  //   if (!result.useBlock) {
+  //     result.useBlock = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.useBlock))
+  //     result.useBlockStats = Object.assign({}, ...ITEMS.mineBlocks.map(k => ({[k]: 0})))
+  //     logFuncs.push(_ => {
+  //       const ens = Object.entries(result.useBlockStats).sort((a, b) => b[1] - a[1])
+  //       console.log(`- Max: ${ens[0].join(' ')}`)
+  //     })
+  //   }
+  //   const sum = sumStats(pstat, ITEMS.mineBlocks, 'stat.useItem.minecraft.', result.useBlockStats)
+  //   result.useBlock[0] += sum
+  //   if (isNewbie) result.useBlock[1] += sum
+  // }
 }
 
 // console.log(`首位玩家入服时间: ${new Date(firstLogin).toLocaleString()}`)
@@ -113,13 +222,6 @@ for (const p of data.players) {
 // console.log(`2017 萌新总数: ${newbieCount} (${(newbieCount / data.players.length * 100).toFixed(3)}%)`)
 // console.log(`第一位萌新: ${firstNewbie.data.playername} (${firstNewbie.data.names.length})`)
 // console.log(`最后一位萌新: ${lastNewbie.data.playername} (${lastNewbie.data.names.length})`)
-// console.log(`总计在线时长: ${totalLiveTime} (${secs2time(totalLiveTime)})`)
-// console.log(`累计开采方块: ${totalMineBlock} (${(newbieMineBlock / totalMineBlock * 100).toFixed(2)}%)`)
-// console.log(`累计铺设铁路: ${useRailCount} (${(useRailNewbie / useRailCount * 100).toFixed(2)}%)`)
-// log('累计飞行', aviateCount / 100, aviateNewbie / 100)
-// log('累计行走', walkCount / 100, walkNewbie / 100)
-// log('累计行驶矿车', ...result.minecart.map(n => n / 100))
-// log('累计划船', ...result.boat.map(n => n / 100))
 
 for (const func of logFuncs) {
   func()
@@ -135,12 +237,11 @@ function secs2time(secs) {
   return `${days}:${hours}:${minutes}:${secs}`
 }
 
-function sumStats(stat, names, prefix) {
-  return Object.entries(stat).filter(en => names.includes(en[0].slice(prefix.length))).reduce((acc, en) => acc + en[1], 0)
-}
-
-function subStats(stat, names, prefix) {
-  return Object.assign({}, ...Object.entries(stat).filter(en => names.includes(en[0].slice(prefix.length))).map(en => ({[en[0]]: en[1]})))
+function sumStats(stat, names, prefix, subStats) {
+  return Object.entries(stat).filter(en => names.includes(en[0].slice(prefix.length))).reduce((acc, en) => {
+    if (subStats) subStats[en[0].slice(prefix.length)] += en[1]
+    return acc + en[1]
+  }, 0)
 }
 
 function log(title, total, newbie) {
