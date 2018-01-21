@@ -23,18 +23,18 @@ for (const p of data.players) {
   // if (pdata.time_start < firstNewbie.data.time_start) firstNewbie = p
   // if (pdata.time_start > lastNewbie.data.time_start) lastNewbie = p
 
-  {
-    const title = '累计在线时间'
-    if (!result.lived) {
-      result.lived = [0, 0]
-      logFuncs.push(_ => console.log(`${title}: ${secs2time(result.lived[0])}`))
-      result.deaths = 0
-      logFuncs.push(_ => console.log(`累计死亡次数: ${result.deaths}`))
-      logFuncs.push(_ => console.log(`平均存活时间: ${secs2time(result.lived[0] / result.deaths)}`))
-    }
-    result.lived[0] += pdata.time_lived
-    result.deaths += pstat['stat.deaths'] || 0
-  }
+  // {
+  //   const title = '累计在线时间'
+  //   if (!result.lived) {
+  //     result.lived = [0, 0]
+  //     logFuncs.push(_ => console.log(`${title}: ${secs2time(result.lived[0])}`))
+  //     result.deaths = 0
+  //     logFuncs.push(_ => console.log(`累计死亡次数: ${result.deaths}`))
+  //     logFuncs.push(_ => console.log(`平均存活时间: ${secs2time(result.lived[0] / result.deaths)}`))
+  //   }
+  //   result.lived[0] += pdata.time_lived
+  //   result.deaths += pstat['stat.deaths'] || 0
+  // }
 
   // {
   //   const title = '累计开采方块'
@@ -209,12 +209,68 @@ for (const p of data.players) {
   //     logFuncs.push(_ => {
   //       const ens = Object.entries(result.useBlockStats).sort((a, b) => b[1] - a[1])
   //       console.log(`- Max: ${ens[0].join(' ')}`)
+  //       console.log(ens.map(en => `    ${en.join(' ')}`).join('\n'))
   //     })
   //   }
   //   const sum = sumStats(pstat, ITEMS.mineBlocks, 'stat.useItem.minecraft.', result.useBlockStats)
   //   result.useBlock[0] += sum
   //   if (isNewbie) result.useBlock[1] += sum
   // }
+
+  // {
+  //   const title = '累计繁殖动物'
+  //   if (!result.bred) {
+  //     result.bred = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.bred))
+  //   }
+  //   const sum = sumStats(pstat, ['stat.animalsBred'], '')
+  //   result.bred[0] += sum
+  //   if (isNewbie) result.bred[1] += sum
+  // }
+
+  // {
+  //   const title = '累计附魔物品'
+  //   if (!result.enchant) {
+  //     result.enchant = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.enchant))
+  //   }
+  //   const sum = sumStats(pstat, ['stat.itemEnchanted'], '')
+  //   result.enchant[0] += sum
+  //   if (isNewbie) result.enchant[1] += sum
+  // }
+
+  // {
+  //   const title = '累计钓到鱼'
+  //   if (!result.fishCaught) {
+  //     result.fishCaught = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.fishCaught))
+  //   }
+  //   const sum = sumStats(pstat, ['stat.fishCaught'], '')
+  //   result.fishCaught[0] += sum
+  //   if (isNewbie) result.fishCaught[1] += sum
+  // }
+
+  // {
+  //   const title = '累计开箱'
+  //   if (!result.chestOpened) {
+  //     result.chestOpened = [0, 0]
+  //     logFuncs.push(_ => log(title, ...result.chestOpened))
+  //   }
+  //   const sum = sumStats(pstat, ['stat.chestOpened'], '')
+  //   result.chestOpened[0] += sum
+  //   if (isNewbie) result.chestOpened[1] += sum
+  // }
+
+  {
+    const title = '累计击杀玩家'
+    if (!result.playerKills) {
+      result.playerKills = [0, 0]
+      logFuncs.push(_ => log(title, ...result.playerKills))
+    }
+    const sum = sumStats(pstat, ['stat.playerKills'], '')
+    result.playerKills[0] += sum
+    if (isNewbie) result.playerKills[1] += sum
+  }
 }
 
 // console.log(`首位玩家入服时间: ${new Date(firstLogin).toLocaleString()}`)
